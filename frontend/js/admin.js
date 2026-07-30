@@ -25,11 +25,11 @@ async function loadAdminSongsTable() {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><img src="${song.coverImage || CONFIG.DEFAULT_COVER}" class="table-thumb" alt="${song.title}"></td>
-        <td><strong>${song.title}</strong></td>
-        <td>${song.artist}</td>
+        <td><strong>${song.title}</strong><br><small class="text-muted">${song.artist}</small></td>
         <td>${song.album || 'Single'}</td>
         <td><span class="badge-genre">${song.genre || 'Pop'}</span></td>
-        <td>${song.duration || '3:30'}</td>
+        <td>${song.releaseYear || new Date().getFullYear()}</td>
+        <td>${song.language || 'English'}</td>
         <td>
           <div class="table-actions">
             <button class="btn-secondary edit-btn" data-id="${id}" style="padding: 6px 12px; font-size: 0.82rem;">
@@ -42,9 +42,7 @@ async function loadAdminSongsTable() {
         </td>
       `;
 
-      // Edit action
       tr.querySelector('.edit-btn').addEventListener('click', () => openEditModal(song));
-      // Delete action
       tr.querySelector('.delete-btn').addEventListener('click', () => deleteSongHandler(id, song.title));
 
       tableBody.appendChild(tr);
@@ -66,6 +64,8 @@ async function handleAddSong(e) {
     album: form.album.value.trim() || 'Single',
     genre: form.genre.value.trim() || 'Pop',
     duration: form.duration.value.trim() || '3:30',
+    releaseYear: form.releaseYear.value ? Number(form.releaseYear.value) : new Date().getFullYear(),
+    language: form.language.value.trim() || 'English',
     coverImage: form.coverImage.value.trim() || CONFIG.DEFAULT_COVER,
     audioUrl: form.audioUrl.value.trim()
   };
@@ -105,6 +105,8 @@ function openEditModal(song) {
   form.editAlbum.value = song.album || '';
   form.editGenre.value = song.genre || '';
   form.editDuration.value = song.duration || '';
+  if (form.editReleaseYear) form.editReleaseYear.value = song.releaseYear || '';
+  if (form.editLanguage) form.editLanguage.value = song.language || '';
   form.editCoverImage.value = song.coverImage || '';
   form.editAudioUrl.value = song.audioUrl || '';
 
@@ -128,6 +130,8 @@ async function handleEditSongSubmit(e) {
     album: form.editAlbum.value.trim() || 'Single',
     genre: form.editGenre.value.trim() || 'Pop',
     duration: form.editDuration.value.trim() || '3:30',
+    releaseYear: form.editReleaseYear.value ? Number(form.editReleaseYear.value) : new Date().getFullYear(),
+    language: form.editLanguage.value.trim() || 'English',
     coverImage: form.editCoverImage.value.trim() || CONFIG.DEFAULT_COVER,
     audioUrl: form.editAudioUrl.value.trim()
   };
