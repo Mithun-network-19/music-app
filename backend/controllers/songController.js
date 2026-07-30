@@ -262,6 +262,84 @@ exports.createSong = async (req, res, next) => {
 };
 
 /**
+ * POST /api/songs/upload
+ * Upload audio file (and optional cover image) and add song to database
+ */
+exports.uploadSong = async (req, res, next) => {
+  try {
+    const { title, artist, album, genre, duration, releaseYear, language } = req.body;
+
+    let audioUrl = req.body.audioUrl;
+    let coverImage = req.body.coverImage;
+
+    // Check files uploaded
+    if (req.files) {
+      if (req.files.audioFile && req.files.audioFile[0]) {
+        audioUrl = '/uploads/' + req.files.audioFile[0].filename;
+      }
+      if (req.files.coverImageFile && req.files.coverImageFile[0]) {
+        coverImage = '/uploads/' + req.files.coverImageFile[0].filename;
+      }
+    } else if (req.file) {
+      audioUrl = '/uploads/' + req.file.filename;
+    }
+
+    if (!title || !title.trim()) {
+      return res.status(400).json({ success: false, message: 'Song title is required' });
+    }
+    if (!artist || !artist.trim()) {
+      return res.status(400).json({ success: false, message: 'Artist name is required' });
+    }
+    if (!audioUrl || !audioUrl.trim()) {
+      return res.status(400).json({ success: false, message: 'Audio file or URL is required' });
+    }
+
+    const trimmedTitle = title.trim();
+    const trimmedArtist = artist.trim();
+
+    const finalCoverImage = coverImage && coverImage.trim() 
+      ? coverImage.trim() 
+      : 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop&q=80';
+
+    if (isDBConnected()) {
+      const song = await Song.create({
+        title: trimmedTitle,
+        artist: trimmedArtist,
+        album: album ? album.trim() : 'Single',
+        genre: genre ? genre.trim() : 'Pop',
+        duration: duration ? duration.trim() : '3:30',
+        coverImage: finalCoverImage,
+        audioUrl: audioUrl.trim(),
+        releaseYear: releaseYear ? Number(releaseYear) : new Date().getFullYear(),
+        language: language ? language.trim() : 'English'
+      });
+
+      return res.status(201).json({ success: true, message: 'Song uploaded and created successfully', data: song });
+    }
+
+    const newMockSong = {
+      id: 'mock-' + Date.now(),
+      title: trimmedTitle,
+      artist: trimmedArtist,
+      album: album ? album.trim() : 'Single',
+      genre: genre ? genre.trim() : 'Pop',
+      duration: duration ? duration.trim() : '3:30',
+      coverImage: finalCoverImage,
+      audioUrl: audioUrl.trim(),
+      releaseYear: releaseYear ? Number(releaseYear) : new Date().getFullYear(),
+      language: language ? language.trim() : 'English',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    };
+
+    mockSongs.unshift(newMockSong);
+    res.status(201).json({ success: true, message: 'Song uploaded in memory mode', data: newMockSong, isMock: true });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
  * PUT /api/songs/:id
  * Update an existing song
  */

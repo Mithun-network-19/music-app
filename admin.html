@@ -119,18 +119,29 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="coverImage">Cover Image URL</label>
+                <label class="form-label" for="coverImageFile">Cover Image File (Upload from device)</label>
+                <input type="file" id="coverImageFile" name="coverImageFile" accept="image/*" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="coverImage">OR Cover Image URL</label>
                 <input type="url" id="coverImage" name="coverImage" class="form-control" placeholder="https://example.com/image.jpg">
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="audioUrl">Audio File Stream URL *</label>
-                <input type="url" id="audioUrl" name="audioUrl" class="form-control" placeholder="https://example.com/music.mp3" required>
+                <label class="form-label" for="audioFile">Audio File * (Upload from device)</label>
+                <input type="file" id="audioFile" name="audioFile" accept="audio/*" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="audioUrl">OR Audio Stream URL</label>
+                <input type="url" id="audioUrl" name="audioUrl" class="form-control" placeholder="https://example.com/music.mp3">
               </div>
 
               <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Save Track to Database
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Track & Save to Database
               </button>
+
             </form>
           </div>
 

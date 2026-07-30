@@ -191,6 +191,29 @@ const API = {
     }
   },
 
+  async uploadSong(formData) {
+    try {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/upload`, {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json();
+        throw new Error(errJson.message || 'Failed to upload song file');
+      }
+
+      const json = await response.json();
+      showToast('Song uploaded and added successfully!', 'success');
+      return json.data;
+    } catch (err) {
+      console.warn('[API Upload Error]:', err.message);
+      showToast(err.message || 'Failed to upload song file', 'error');
+      return null;
+    }
+  },
+
+
   async updateSong(id, songData) {
     try {
       const response = await fetch(`${CONFIG.API_BASE_URL}/${id}`, {

@@ -4,10 +4,12 @@ const {
   getAllSongs,
   getSongById,
   createSong,
+  uploadSong,
   updateSong,
   deleteSong,
   seedSongs
 } = require('../controllers/songController');
+const upload = require('../middleware/upload');
 
 /**
  * @route   GET /api/songs
@@ -17,11 +19,19 @@ const {
 router.get('/', getAllSongs);
 
 /**
+ * @route   POST /api/songs/upload
+ * @desc    Upload audio file & metadata to add new song
+ * @access  Admin
+ */
+router.post('/upload', upload.fields([{ name: 'audioFile', maxCount: 1 }, { name: 'coverImageFile', maxCount: 1 }]), uploadSong);
+
+/**
  * @route   POST /api/songs/seed
  * @desc    Seed database with sample songs
  * @access  Public
  */
 router.post('/seed', seedSongs);
+
 
 /**
  * @route   GET /api/songs/:id
