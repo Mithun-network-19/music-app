@@ -4,6 +4,55 @@
 
 let editingSongId = null;
 
+// Admin credentials
+const ADMIN_USERNAME = 'mithun';
+const ADMIN_PASSWORD = '142011';
+
+// Check if user is logged in
+function isLoggedIn() {
+  return sessionStorage.getItem('adminLoggedIn') === 'true';
+}
+
+// Handle login
+function handleLogin(e) {
+  e.preventDefault();
+  const form = e.target;
+  const username = form.username.value.trim();
+  const password = form.password.value.trim();
+  const errorDiv = document.getElementById('login-error');
+
+  if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+    sessionStorage.setItem('adminLoggedIn', 'true');
+    showToast('Login successful!', 'success');
+    showAdminDashboard();
+  } else {
+    errorDiv.style.display = 'block';
+    setTimeout(() => {
+      errorDiv.style.display = 'none';
+    }, 3000);
+  }
+}
+
+// Handle logout
+function handleLogout() {
+  sessionStorage.removeItem('adminLoggedIn');
+  showLoginForm();
+  showToast('Logged out successfully', 'success');
+}
+
+// Show login form
+function showLoginForm() {
+  document.getElementById('login-section').style.display = 'block';
+  document.getElementById('admin-section').style.display = 'none';
+}
+
+// Show admin dashboard
+function showAdminDashboard() {
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('admin-section').style.display = 'block';
+  loadAdminSongsTable();
+}
+
 async function loadAdminSongsTable() {
   const tableBody = document.getElementById('admin-songs-tbody');
   if (!tableBody) return;
@@ -162,6 +211,21 @@ async function handleEditSongSubmit(e) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // Check login status
+  if (isLoggedIn()) {
+    showAdminDashboard();
+  } else {
+    showLoginForm();
+  }
+
+  // Login form
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) loginForm.addEventListener('submit', handleLogin);
+
+  // Logout button
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+
   const addForm = document.getElementById('add-song-form');
   if (addForm) addForm.addEventListener('submit', handleAddSong);
 
@@ -177,6 +241,4 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === modalOverlay) closeEditModal();
     });
   }
-
-  loadAdminSongsTable();
 });

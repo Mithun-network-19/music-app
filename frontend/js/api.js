@@ -179,6 +179,31 @@ const API = {
     }
   },
 
+  // Upload song with files
+  async uploadSong(formData) {
+    try {
+      const response = await fetch(`${CONFIG.API_BASE_URL}/upload`, {
+        method: 'POST',
+        body: formData // Don't set Content-Type header, browser will set it with boundary
+      });
+
+      if (!response.ok) {
+        const errJson = await response.json().catch(() => ({ message: 'Upload failed' }));
+        throw new Error(errJson.message || 'Failed to upload song');
+      }
+
+      const json = await response.json();
+      showToast('Song uploaded successfully!', 'success');
+      return json.data;
+    } catch (err) {
+      console.error('[API Upload Error]:', err);
+      // Show more specific error message
+      const errorMessage = err.message || 'Failed to upload song';
+      showToast(errorMessage, 'error');
+      return null;
+    }
+  },
+
   // Update song
   async updateSong(id, songData) {
     try {

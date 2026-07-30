@@ -22,14 +22,19 @@ const storage = multer.diskStorage({
 
 // Check file type
 const fileFilter = (req, file, cb) => {
-  const allowedFileTypes = /jpeg|jpg|png|gif|mp3|wav|m4a|ogg|aac/;
-  const extname = allowedFileTypes.test(path.extname(file.originalname).toLowerCase());
-  const mimetype = allowedFileTypes.test(file.mimetype);
+  // Allowed extensions
+  const allowedExtensions = /jpeg|jpg|png|gif|mp3|wav|m4a|ogg|aac|mpeg/;
+  const extname = allowedExtensions.test(path.extname(file.originalname).toLowerCase());
+  
+  // Allowed MIME types
+  const allowedMimeTypes = /image\/(jpeg|jpg|png|gif)|audio\/(mpeg|mp3|wav|x-wav|ogg|mp4|aac|x-m4a)/;
+  const mimetype = allowedMimeTypes.test(file.mimetype);
 
-  if (mimetype && extname) {
+  // Accept if extension is valid OR mimetype is valid (more lenient)
+  if (extname || mimetype) {
     return cb(null, true);
   } else {
-    cb(new Error('Audio/Image Files Only!'));
+    cb(new Error('Only audio files (MP3, WAV, M4A, OGG, AAC) and image files (JPG, PNG, GIF) are allowed!'));
   }
 };
 

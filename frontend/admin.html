@@ -68,11 +68,52 @@
 
   <!-- Main Dynamic SPA Page Content Container -->
   <main id="app-content">
-    <section class="section">
+    <!-- Login Section -->
+    <section id="login-section" class="section">
+      <div class="container" style="max-width: 450px; margin-top: 80px;">
+        <div class="admin-card">
+          <div style="text-align: center; margin-bottom: 30px;">
+            <div class="logo-icon" style="width: 80px; height: 80px; margin: 0 auto 20px; font-size: 2rem;">
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <h1 class="section-title" style="font-size: 1.8rem; margin-bottom: 10px;">Admin Login</h1>
+            <p class="section-subtitle">Enter your credentials to access the admin dashboard</p>
+          </div>
+
+          <form id="login-form">
+            <div class="form-group">
+              <label class="form-label" for="username">Username</label>
+              <input type="text" id="username" name="username" class="form-control" placeholder="Enter username" required>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="password">Password</label>
+              <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <div id="login-error" style="color: #ff4444; text-align: center; margin-bottom: 15px; display: none;">
+              Invalid username or password
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%; justify-content: center;">
+              <i class="fa-solid fa-right-to-bracket"></i> Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Admin Dashboard Section (Hidden by default) -->
+    <section id="admin-section" class="section" style="display: none;">
       <div class="container">
-        <div style="margin-bottom: 30px;">
-          <h1 class="section-title" style="font-size: 2.2rem;">Admin Dashboard</h1>
-          <p class="section-subtitle">Add, update, or remove songs from the MongoDB Atlas platform</p>
+        <div style="margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+          <div>
+            <h1 class="section-title" style="font-size: 2.2rem;">Admin Dashboard</h1>
+            <p class="section-subtitle">Add, update, or remove songs from the MongoDB Atlas platform</p>
+          </div>
+          <button id="logout-btn" class="btn-secondary">
+            <i class="fa-solid fa-right-from-bracket"></i> Logout
+          </button>
         </div>
 
         <div class="admin-grid">
@@ -119,17 +160,30 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="coverImage">Cover Image URL</label>
+                <label class="form-label" for="coverImageFile">📷 Cover Image File (Upload from device)</label>
+                <input type="file" id="coverImageFile" name="coverImageFile" accept="image/*" class="form-control">
+                <small style="color: #888; font-size: 0.85rem;">Supported: JPG, PNG, GIF (Max 50MB)</small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="coverImage">OR Cover Image URL</label>
                 <input type="url" id="coverImage" name="coverImage" class="form-control" placeholder="https://example.com/image.jpg">
               </div>
 
               <div class="form-group">
-                <label class="form-label" for="audioUrl">Audio File Stream URL *</label>
-                <input type="url" id="audioUrl" name="audioUrl" class="form-control" placeholder="https://example.com/music.mp3" required>
+                <label class="form-label" for="audioFile">🎵 Audio File * (Upload from device)</label>
+                <input type="file" id="audioFile" name="audioFile" accept="audio/*" class="form-control">
+                <small style="color: #888; font-size: 0.85rem;">Supported: MP3, WAV, M4A, OGG, AAC (Max 50MB)</small>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="audioUrl">OR Audio Stream URL</label>
+                <input type="url" id="audioUrl" name="audioUrl" class="form-control" placeholder="https://example.com/music.mp3">
+                <small style="color: #888; font-size: 0.85rem;">Provide either a file OR a URL (at least one required)</small>
               </div>
 
               <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 10px;">
-                <i class="fa-solid fa-cloud-arrow-up"></i> Save Track to Database
+                <i class="fa-solid fa-cloud-arrow-up"></i> Upload Track & Save to Database
               </button>
             </form>
           </div>
