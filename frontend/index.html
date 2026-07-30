@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>AuraSound - Modern Music Streaming</title>
   <meta name="description" content="Stream high quality music online. Discover new songs, artists, and playlists with AuraSound.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 </head>
 <body>
 
-  <!-- Navigation Bar -->
+  <!-- Top Navigation Bar -->
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="logo nav-link-spa">
@@ -33,12 +33,41 @@
         <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
           <i class="fa-solid fa-sun"></i>
         </button>
-        <a href="browse.html" class="btn-primary nav-link-spa">
+        <a href="browse.html" class="btn-primary nav-link-spa desktop-only-btn">
           <i class="fa-solid fa-play"></i> Start Listening
         </a>
+        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Toggle Mobile Menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Slide-out Menu Drawer -->
+  <div id="mobile-drawer" class="mobile-drawer">
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer-content">
+      <div class="drawer-header">
+        <div class="logo">
+          <div class="logo-icon"><i class="fa-solid fa-music"></i></div>
+          <span>AuraSound</span>
+        </div>
+        <button id="drawer-close-btn" class="drawer-close-btn" aria-label="Close Menu">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <ul class="drawer-links">
+        <li><a href="index.html" class="drawer-link nav-link-spa active" data-page="index"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="browse.html" class="drawer-link nav-link-spa" data-page="browse"><i class="fa-solid fa-compass"></i> Browse</a></li>
+        <li><a href="admin.html" class="drawer-link nav-link-spa" data-page="admin"><i class="fa-solid fa-sliders"></i> Admin Dashboard</a></li>
+      </ul>
+      <div class="drawer-footer">
+        <a href="browse.html" class="btn-primary nav-link-spa" style="width:100%; justify-content:center;">
+          <i class="fa-solid fa-play"></i> Start Listening Now
+        </a>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Dynamic SPA Page Content Container -->
   <main id="app-content">
@@ -99,7 +128,7 @@
     </section>
   </main>
 
-  <!-- Persistent Bottom Music Player Dock (Stays active across all page navigations) -->
+  <!-- Persistent Bottom Music Player Dock -->
   <div class="player-dock">
     <div class="player-container">
       <div class="player-track-info">
@@ -136,6 +165,22 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile Bottom Quick Navigation Bar -->
+  <nav class="mobile-bottom-nav" aria-label="Mobile Navigation">
+    <a href="index.html" class="mob-nav-item nav-link-spa active" data-page="index">
+      <i class="fa-solid fa-house"></i>
+      <span>Home</span>
+    </a>
+    <a href="browse.html" class="mob-nav-item nav-link-spa" data-page="browse">
+      <i class="fa-solid fa-compass"></i>
+      <span>Browse</span>
+    </a>
+    <a href="admin.html" class="mob-nav-item nav-link-spa" data-page="admin">
+      <i class="fa-solid fa-sliders"></i>
+      <span>Admin</span>
+    </a>
+  </nav>
 
   <!-- Footer -->
   <footer class="footer">

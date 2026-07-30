@@ -1006,62 +1006,477 @@ input, select, textarea {
 /* --------------------------------------------------------------------------
    12. Responsive Breakpoints
    -------------------------------------------------------------------------- */
-@media (max-width: 992px) {
+/* ==========================================================================
+   Mobile Navigation, Mobile Bottom Dock & Complete Responsive Design System
+   ========================================================================== */
+
+/* Mobile Hamburger Toggle Button */
+.mobile-menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.mobile-menu-toggle:hover {
+  background-color: var(--bg-card-hover);
+}
+
+/* Mobile Slide-out Menu Drawer */
+.mobile-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2500;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.mobile-drawer.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.drawer-content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80%;
+  max-width: 320px;
+  height: 100%;
+  background-color: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transform: translateX(100%);
+  transition: transform var(--transition-normal);
+}
+
+.mobile-drawer.active .drawer-content {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: 24px;
+}
+
+.drawer-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  transition: all var(--transition-fast);
+}
+
+.drawer-close-btn:hover {
+  color: var(--text-primary);
+  background-color: var(--bg-card-hover);
+}
+
+.drawer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  transition: all var(--transition-fast);
+}
+
+.drawer-link:hover, .drawer-link.active {
+  color: var(--text-primary);
+  background-color: var(--accent-light);
+  color: var(--accent-color);
+}
+
+.drawer-footer {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Mobile Bottom Navigation Dock */
+.mobile-bottom-nav {
+  display: none;
+}
+
+/* Base Responsive Grids & Layouts */
+.song-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.artist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+/* ==========================================================================
+   BREAKPOINTS & MEDIA QUERIES
+   ========================================================================== */
+
+/* Laptop & Large Tablets (max-width: 1024px) */
+@media (max-width: 1024px) {
   .hero-card {
-    grid-template-columns: 1fr;
-    text-align: center;
+    grid-template-columns: 1fr 1fr;
+    padding: 40px 30px;
+    gap: 20px;
   }
 
-  .hero-cta {
-    justify-content: center;
-  }
-
-  .vinyl-record {
-    width: 170px;
-    height: 170px;
+  .hero-title {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
   }
 
   .admin-grid {
     grid-template-columns: 1fr;
+    gap: 30px;
   }
 
   .player-container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1.2fr 2fr 1fr;
+  }
+}
+
+/* Medium Screens & Tablets (max-width: 868px) */
+@media (max-width: 868px) {
+  .search-filter-box {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .filter-select {
+    flex: 1;
+    min-width: 140px;
+  }
+}
+
+/* Mobile & Small Tablets (max-width: 768px) */
+@media (max-width: 768px) {
+  /* Layout Paddings */
+  body {
+    padding-bottom: 140px;
+  }
+
+  .container {
+    width: 95%;
+    padding: 0 12px;
+  }
+
+  /* Navbar Adjustments */
+  .nav-links {
+    display: none;
+  }
+
+  .desktop-only-btn {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: flex;
+  }
+
+  /* Mobile Bottom Quick Dock */
+  .mobile-bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: var(--bg-player);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-color);
+    z-index: 1200;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px 10px;
+  }
+
+  .mob-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .mob-nav-item.active, .mob-nav-item:hover {
+    color: var(--accent-color);
+    background-color: var(--accent-light);
+  }
+
+  .mob-nav-item i {
+    font-size: 1.2rem;
+  }
+
+  /* Mobile Music Player Dock */
+  .player-dock {
+    position: fixed;
+    bottom: 60px;
+    left: 0;
+    width: 100%;
+    height: 66px;
+    padding: 6px 12px;
+    background: var(--bg-player);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border-color);
+    z-index: 1100;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .player-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    grid-template-columns: none;
+  }
+
+  .player-track-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .player-cover {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    flex-shrink: 0;
+  }
+
+  .player-details {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .player-title {
+    font-size: 0.88rem;
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-artist {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .player-center-controls {
+    flex-shrink: 0;
+  }
+
+  .control-buttons {
+    gap: 8px;
+  }
+
+  #player-shuffle-btn, #player-repeat-btn {
+    display: none;
+  }
+
+  .play-pause-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .ctrl-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  /* Compact Top Progress Bar on Mobile Player Dock */
+  .progress-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+  }
+
+  #player-current-time, #player-total-time {
+    display: none;
+  }
+
+  .progress-bar-wrapper {
+    height: 3px;
+    border-radius: 0;
   }
 
   .player-right-controls {
     display: none;
   }
+
+  /* Hero Section */
+  .hero {
+    padding: 24px 0 20px;
+  }
+
+  .hero-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 30px 20px;
+    gap: 24px;
+  }
+
+  .hero-cta {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .btn-primary, .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+  }
+
+  .vinyl-record {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+  }
+
+  /* Section Headers */
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .see-all-btn {
+    align-self: flex-start;
+  }
+
+  /* Song & Artist Grids on Mobile */
+  .song-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 14px;
+  }
+
+  .artist-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 14px;
+  }
+
+  /* Admin & Modals */
+  .table-responsive {
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+  }
+
+  .song-table th, .song-table td {
+    padding: 10px 12px;
+    font-size: 0.85rem;
+  }
+
+  .modal-content {
+    width: 92%;
+    padding: 22px 18px;
+    max-height: 85vh;
+    overflow-y: auto;
+  }
 }
 
-@media (max-width: 768px) {
-  .nav-links {
-    display: none; /* Can be toggled or compact */
+/* Extra Small Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+  .logo span {
+    font-size: 1.15rem;
   }
 
   .hero-title {
-    font-size: 2.1rem;
+    font-size: 1.65rem;
   }
 
-  .player-container {
-    grid-template-columns: 1fr;
-    text-align: center;
+  .hero-subtitle {
+    font-size: 0.9rem;
   }
 
-  .player-track-info {
-    justify-content: center;
+  .song-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .progress-container {
-    max-width: 100%;
+  .artist-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .player-dock {
-    height: auto;
-    padding: 12px 15px;
+  .filter-select {
+    width: 100%;
   }
 
-  body {
-    padding-bottom: 110px;
+  .toast-container {
+    left: 15px;
+    right: 15px;
+    top: 75px;
   }
 }
