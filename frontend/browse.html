@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Music - AuraSound</title>
+  <meta name="description" content="Browse and search songs, filter by artist, album, or genre on AuraSound.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo nav-link-spa">
+        <div class="logo-icon">
+          <i class="fa-solid fa-music"></i>
+        </div>
+        <span>AuraSound</span>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link nav-link-spa" data-page="index"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li><a href="browse.html" class="nav-link nav-link-spa active" data-page="browse"><i class="fa-solid fa-compass"></i> Browse</a></li>
+        <li><a href="admin.html" class="nav-link nav-link-spa" data-page="admin"><i class="fa-solid fa-sliders"></i> Admin</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
+          <i class="fa-solid fa-sun"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Dynamic SPA Page Content Container -->
+  <main id="app-content">
+    <section class="section">
+      <div class="container">
+        <div class="browse-header">
+          <h1 class="section-title" style="font-size: 2.2rem;">Explore Music Library</h1>
+          <p class="section-subtitle">Discover tracks by title, artist, album, or genre</p>
+        </div>
+
+        <!-- Search & Filters -->
+        <div class="search-filter-box">
+          <div class="search-bar-wrapper">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="search-input" class="search-input" placeholder="Search songs by title, artist, or album...">
+          </div>
+
+          <div class="filter-group">
+            <select id="artist-filter" class="filter-select">
+              <option value="">All Artists</option>
+            </select>
+            <select id="album-filter" class="filter-select">
+              <option value="">All Albums</option>
+            </select>
+            <select id="genre-filter" class="filter-select">
+              <option value="">All Genres</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Song Cards Grid -->
+        <div id="browse-songs-grid" class="song-grid">
+          <!-- Dynamic cards -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Persistent Bottom Music Player Dock -->
+  <div class="player-dock">
+    <div class="player-container">
+      <div class="player-track-info">
+        <img id="player-cover" src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&auto=format&fit=crop&q=80" alt="Cover" class="player-cover">
+        <div class="player-details">
+          <span id="player-title" class="player-title">Select a Track</span>
+          <span id="player-artist" class="player-artist">AuraSound Player</span>
+        </div>
+      </div>
+
+      <div class="player-center-controls">
+        <div class="control-buttons">
+          <button id="player-shuffle-btn" class="ctrl-btn" title="Shuffle"><i class="fa-solid fa-shuffle"></i></button>
+          <button id="player-prev-btn" class="ctrl-btn" title="Previous"><i class="fa-solid fa-backward-step"></i></button>
+          <button id="player-play-btn" class="play-pause-btn" title="Play/Pause"><i class="fa-solid fa-play"></i></button>
+          <button id="player-next-btn" class="ctrl-btn" title="Next"><i class="fa-solid fa-forward-step"></i></button>
+          <button id="player-repeat-btn" class="ctrl-btn" title="Repeat"><i class="fa-solid fa-repeat"></i></button>
+        </div>
+
+        <div class="progress-container">
+          <span id="player-current-time">0:00</span>
+          <div id="player-progress-container" class="progress-bar-wrapper">
+            <div id="player-progress" class="progress-fill"></div>
+          </div>
+          <span id="player-total-time">0:00</span>
+        </div>
+      </div>
+
+      <div class="player-right-controls">
+        <button id="player-mute-btn" class="ctrl-btn" title="Mute/Unmute"><i class="fa-solid fa-volume-high"></i></button>
+        <div class="volume-wrapper">
+          <input id="player-volume" type="range" class="volume-slider" min="0" max="100" value="80">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>&copy; 2026 AuraSound. Minimalist Music Streaming Platform.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/player.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
